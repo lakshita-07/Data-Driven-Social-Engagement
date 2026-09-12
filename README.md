@@ -7,7 +7,7 @@ YouTube Data API v3.
 
 ## Current Dataset
 
-- 100 Psych2Go videos
+- 100 Psych2Go videos(Youtube)
 - 9,335 processed top-level comments
 - 1,223 comments classified as `Relatable` by the rule-based baseline
 - 90 long-form videos and 10 Shorts
@@ -62,15 +62,12 @@ Never commit `.env`, API keys, or unredacted raw exports.
 - **Data processing:** Pandas and NumPy
 - **Collection:** YouTube Data API v3, with a deprecated Selenium fallback
 - **Text analysis:** TextBlob, regular-expression cleaning, and scikit-learn
-- **Statistical modeling:** SciPy, scikit-learn, and Mann-Whitney/Kruskal-Wallis tests
+- **Statistical modeling:** SciPy, scikit-learn, and other tests
 - **Database:** MySQL via `mysql-connector-python`
 - **Visualization:** Streamlit, with Pandas chart outputs
 - **Storage:** CSV source/derived files plus MySQL `posts` and `comments` tables
 - **Testing:** pytest
 
-Instagram Graph API, Power BI, Tableau, and Jupyter notebooks are not used in
-the current implementation. The project uses public Psych2Go YouTube data and
-Streamlit instead.
 
 ## Live Psych2Go Pipeline
 
