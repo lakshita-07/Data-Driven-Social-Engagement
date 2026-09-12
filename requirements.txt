@@ -18,7 +18,6 @@ mysql-connector-python
 
 streamlit
 
-googlecolab
 python-dotenv
 google-api-python-client
 openpyxl
