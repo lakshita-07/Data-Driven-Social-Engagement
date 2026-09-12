@@ -56,6 +56,22 @@ DATA_SOURCE=public_youtube
 
 Never commit `.env`, API keys, or unredacted raw exports.
 
+## Technology Stack
+
+- **Language:** Python 3.9+
+- **Data processing:** Pandas and NumPy
+- **Collection:** YouTube Data API v3, with a deprecated Selenium fallback
+- **Text analysis:** TextBlob, regular-expression cleaning, and scikit-learn
+- **Statistical modeling:** SciPy, scikit-learn, and Mann-Whitney/Kruskal-Wallis tests
+- **Database:** MySQL via `mysql-connector-python`
+- **Visualization:** Streamlit, with Pandas chart outputs
+- **Storage:** CSV source/derived files plus MySQL `posts` and `comments` tables
+- **Testing:** pytest
+
+Instagram Graph API, Power BI, Tableau, and Jupyter notebooks are not used in
+the current implementation. The project uses public Psych2Go YouTube data and
+Streamlit instead.
+
 ## Live Psych2Go Pipeline
 
 Collect public videos and comments, then regenerate all processed outputs:
