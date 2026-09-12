@@ -141,6 +141,51 @@ python -m src.models.ab_testing
 python -m src.models.ab_framework_validation
 ```
 
+## Formulas and Scoring
+
+The main engagement metrics are calculated as:
+
+```text
+engagement_rate = 100 * (likes + comments_count) / views
+like_rate       = 100 * likes / views
+comment_rate   = 100 * comments_count / views
+views_per_second = views / duration_seconds
+```
+
+For public Psych2Go data, shares and saves are unavailable. The project uses
+this clearly labeled ranking proxy instead of inventing those values:
+
+```text
+virality_score = engagement_rate * percentile_rank(views)
+```
+
+If first-party share and save fields are ever available, the documented
+weighted score is:
+
+```text
+weighted_virality = 100 * (
+  0.40 * shares + 0.30 * saves +
+  0.20 * comments_count + 0.10 * likes
+) / views
+```
+
+The rule-based relatability score assigns `+3` for strong identification
+phrases, `+2` for struggle words, `+2` for personal reference plus problem
+context, and `+2` for personal reference plus `feel`. Scores of 3 or more are
+`Relatable`; lower scores are `Neutral`.
+
+Topic recommendations combine percentile-ranked metrics using these weights:
+
+```text
+topic_recommendation =
+  0.40 * engagement_percentile +
+  0.35 * virality_percentile +
+  0.25 * relatable_comment_percentile
+```
+
+These are descriptive metrics. They do not establish causality or replace a
+randomized experiment.
+
 ## Manual Relatability Labels
 
 The reviewed file at `data/external/relatability_annotation_sample.csv` contains
