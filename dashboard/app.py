@@ -44,6 +44,9 @@ topic_relatability = load_csv("topic_relatability.csv", required=False)
 format_analysis = load_csv("format_analysis.csv", required=False)
 topic_performance = load_csv("topic_performance.csv", required=False)
 recommendations = load_csv("recommendations.csv", required=False)
+hourly_analysis = load_csv("hourly_analysis.csv", required=False)
+day_analysis = load_csv("day_analysis.csv", required=False)
+statistical_tests = load_csv("historical_statistical_tests.csv", required=False)
 trend_forecasts = load_csv("trend_forecasts.csv", required=False)
 relatability_metrics = load_csv("relatability_model_metrics.csv", required=False)
 ab_test_results = load_csv("ab_test_results_summary.csv", required=False)
@@ -79,7 +82,7 @@ st.subheader("Topic performance and audience resonance")
 topic_left, topic_right = st.columns(2)
 with topic_left:
     if topic_performance.empty:
-        st.info("Run `python3 -m src.models.topic_performance` to generate topic performance data.")
+        st.info("Run `python run_pipeline.py --mode live --skip-collect` to generate topic performance data.")
     else:
         topic_view = topic_performance.set_index("topic")[["average_engagement_rate", "average_virality_score"]]
         st.bar_chart(topic_view)
@@ -92,6 +95,25 @@ with topic_right:
 
 if not topic_relatability.empty:
     st.dataframe(topic_relatability, use_container_width=True, hide_index=True)
+
+st.subheader("Timing and historical comparisons")
+timing_left, timing_right = st.columns(2)
+with timing_left:
+    if hourly_analysis.empty:
+        st.info("Timing outputs are unavailable.")
+    else:
+        st.markdown("**Engagement by posting hour**")
+        st.line_chart(hourly_analysis.set_index("posting_hour")["average_engagement_rate"])
+with timing_right:
+    if day_analysis.empty:
+        st.info("Day-of-week outputs are unavailable.")
+    else:
+        st.markdown("**Engagement by posting day**")
+        st.bar_chart(day_analysis.set_index("posting_day")["average_engagement_rate"])
+if statistical_tests.empty:
+    st.info("Historical statistical comparison results are unavailable.")
+else:
+    st.dataframe(statistical_tests, use_container_width=True, hide_index=True)
 
 st.subheader("Historical recommendations")
 if recommendations.empty:

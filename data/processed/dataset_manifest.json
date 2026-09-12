@@ -1,0 +1,29 @@
+{
+  "mode": "live",
+  "source": "YouTube API and configured database",
+  "generated_at_utc": "2026-09-12T12:30:18.647273+00:00",
+  "schema_version": "1.0",
+  "raw_directory": "data/raw",
+  "processed_directory": "data/processed",
+  "row_counts": {
+    "comments_processed.csv": 9335,
+    "comments_relatability.csv": 9335,
+    "comments_sentiment.csv": 9335,
+    "day_analysis.csv": 7,
+    "format_analysis.csv": 2,
+    "historical_statistical_tests.csv": 4,
+    "hourly_analysis.csv": 23,
+    "posts_features.csv": 100,
+    "posts_processed.csv": 100,
+    "posts_topics.csv": 100,
+    "posts_virality.csv": 100,
+    "recommendations.csv": 38,
+    "relatability_model_metrics.csv": 4,
+    "relatability_model_predictions.csv": 12,
+    "topic_performance.csv": 6,
+    "topic_relatability.csv": 6
+  },
+  "warnings": [
+    "External trend data not connected"
+  ]
+}

@@ -1,40 +1,39 @@
 recommendation_type,recommendation,video_count,comment_count,relatable_comment_count,relatable_comment_rate,average_engagement_rate,average_virality_score,recommendation_score,evidence_note
-Topic,Procrastination and Productivity,11,1088,54,4.963235294117647,3.969962695928586,2.2358149296663856,0.7999999999999999,Descriptive historical result; not evidence of causation.
-Topic,Money and Financial Struggles,9,746,13,1.742627345844504,5.092162434813115,1.7809901854779657,0.7714285714285714,Descriptive result; review cautiously because fewer than 10 videos were observed.
-Topic,Relationships and Social Life,11,989,52,5.25783619817998,3.344775058802338,1.6378289006892073,0.6285714285714286,Descriptive historical result; not evidence of causation.
-Topic,Academic Pressure,45,3648,219,6.003289473684211,3.221680290990789,1.6053351071191406,0.5571428571428572,Descriptive historical result; not evidence of causation.
-Topic,Burnout and Mental Pressure,10,818,170,20.78239608801956,3.1534951859959053,1.0458827817010723,0.5214285714285714,Descriptive historical result; not evidence of causation.
-Topic,Other,7,617,10,1.6207455429497568,2.4761402345232075,1.7749208640015048,0.39999999999999997,Descriptive result; review cautiously because fewer than 10 videos were observed.
-Topic,Career and Job Anxiety,14,935,125,13.368983957219251,2.171875488896402,0.528400740511775,0.3214285714285714,Descriptive historical result; not evidence of causation.
-Format,Long-form,47,,,,3.503532115045835,1.2862140065653902,0.775,Observational comparison; not a randomized A/B test.
-Format,Short,60,,,,3.0979228541493433,1.6784649924531216,0.7250000000000001,Observational comparison; not a randomized A/B test.
-Posting hour,1,1,,,,18.77712087959223,4.387177775605661,1.0,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,21,1,,,,8.07956795424062,4.0020289866799335,0.9565217391304348,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,2,3,,,,5.218013384211979,2.628958855620032,0.8934782608695653,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,14,9,,,,3.8716690490423207,2.2942349663507557,0.7826086956521741,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,15,6,,,,4.110279177506356,1.7625630824869514,0.7717391304347827,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,17,7,,,,3.593761699919923,2.800183314930248,0.7456521739130435,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,3,4,,,,3.9836115525928975,1.6831992931867077,0.7282608695652175,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,20,1,,,,3.7112805312208272,1.8036129684437665,0.6956521739130435,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,5,4,,,,3.3154191681923018,2.4511152767147117,0.6586956521739131,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,13,10,,,,3.8211541118664427,1.1540170642903573,0.6021739130434782,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,8,4,,,,2.9655477483888095,2.060805584646489,0.5717391304347825,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,7,4,,,,3.437746884621766,1.5003784433277805,0.5652173913043478,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,4,3,,,,3.1749405084297404,1.4111133215160336,0.49782608695652175,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,10,4,,,,3.6129421247070703,0.7249690615372772,0.4173913043478261,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,0,4,,,,2.6840933662931423,1.374094532245676,0.40652173913043477,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,11,5,,,,2.726777072136886,0.9564692662110416,0.35217391304347834,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,18,2,,,,2.2624684142055917,1.0678107939045056,0.30000000000000004,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,16,9,,,,2.413723307635471,0.9189159783934583,0.2847826086956522,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,9,5,,,,1.7061069972931076,1.1445196030568114,0.2,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,12,11,,,,2.1995337257733243,0.8896837489579305,0.19782608695652176,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,6,3,,,,2.044672328325927,0.9144136932363356,0.1934782608695652,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,22,3,,,,2.0408886219316336,0.5690928857521965,0.1108695652173913,Historical observation; current tests found no statistically significant timing effect.
-Posting hour,19,4,,,,1.7645289827173742,0.5389687680756153,0.06739130434782609,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Sunday,16,,,,3.8344002808951534,2.155510842406896,0.9214285714285715,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Monday,15,,,,4.191175735754675,1.4056417273617223,0.8071428571428572,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Wednesday,11,,,,3.696403254350126,1.4533211929247978,0.7142857142857144,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Friday,12,,,,3.0956987259757622,1.7548592623125143,0.7,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Tuesday,17,,,,3.0340607415622403,1.1242614568673457,0.3,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Saturday,19,,,,2.832836863581919,1.3536801725197884,0.2857142857142857,Historical observation; current tests found no statistically significant timing effect.
-Posting day,Thursday,17,,,,2.5359756824292443,1.3947027148400395,0.2714285714285714,Historical observation; current tests found no statistically significant timing effect.
+Topic,Procrastination and Productivity,2,200,31,15.5,7.484416244428148,4.590523114657157,0.8666666666666667,Descriptive result; review cautiously because fewer than 10 videos were observed.
+Topic,Career and Job Anxiety,13,1178,161,13.66723259762309,7.729724947932786,3.998107238001045,0.8583333333333333,Descriptive historical result; not evidence of causation.
+Topic,Other,22,2086,231,11.073825503355703,7.56788240769998,3.6104806624350307,0.6083333333333333,Descriptive historical result; not evidence of causation.
+Topic,Burnout and Mental Pressure,19,1700,255,15.0,6.702101154411646,3.3877763382208173,0.5166666666666667,Descriptive historical result; not evidence of causation.
+Topic,Relationships and Social Life,32,3162,424,13.40923466160658,7.063758341703925,3.1783607065660817,0.38333333333333336,Descriptive historical result; not evidence of causation.
+Topic,Academic Pressure,12,1009,121,11.99207135777998,6.545184972551653,3.272002416632669,0.26666666666666666,Descriptive historical result; not evidence of causation.
+Format,Long-form,90,,,,7.421328778401495,3.6065902716476703,1.0,Observational comparison; not a randomized A/B test.
+Format,Short,10,,,,4.5951488264214175,2.133321248451045,0.5,Observational comparison; not a randomized A/B test.
+Posting hour,1,6,,,,8.391705363954229,5.070925582413689,0.9521739130434783,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,0,3,,,,8.640680194692285,4.314144194793429,0.9173913043478261,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,16,2,,,,9.298077715575864,3.9320587949159616,0.8826086956521739,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,9,7,,,,7.705053445020072,4.282564818753615,0.7782608695652173,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,17,5,,,,7.592870473082442,4.18060214971874,0.7347826086956522,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,7,4,,,,8.20575692176666,3.2774858145362633,0.6739130434782609,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,3,4,,,,6.884205670125156,4.931564946938109,0.6695652173913044,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,10,4,,,,8.064716635576708,3.2473281052689713,0.6304347826086957,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,8,7,,,,7.354556694815186,3.6171380157628805,0.6282608695652174,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,19,3,,,,7.450510671914681,3.396697876567232,0.6130434782608696,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,6,2,,,,5.753228723315484,4.805243927999099,0.5304347826086956,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,4,2,,,,7.949985178879018,1.8452963595032092,0.5086956521739131,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,11,5,,,,7.106327679770226,3.2941404774025527,0.5021739130434782,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,21,3,,,,6.692309152166319,3.5202893734591023,0.48913043478260876,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,12,12,,,,7.248903714869923,3.0133411309727722,0.4478260869565217,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,22,6,,,,6.216235852215015,3.3309049867909315,0.40217391304347827,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,13,9,,,,7.0823968787405684,2.678440116178582,0.36086956521739133,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,20,2,,,,4.890813621261373,3.7015049723983995,0.36086956521739133,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,2,5,,,,6.171983427820625,3.147382694711284,0.30000000000000004,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,15,3,,,,6.549693700518028,1.8234803125945849,0.23043478260869565,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,5,2,,,,5.5858758345086645,2.9855182185839118,0.21304347826086956,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,23,3,,,,5.369467649809208,1.8324312158702438,0.13043478260869565,Historical observation; current tests found no statistically significant timing effect.
+Posting hour,14,1,,,,2.039172489759389,1.814863515885856,0.043478260869565216,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Tuesday,12,,,,7.742868874387367,3.964017400985733,0.9357142857142857,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Sunday,18,,,,7.230327347371567,3.2078060255913794,0.65,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Monday,15,,,,6.765577966185957,4.485375442773861,0.6071428571428572,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Thursday,13,,,,7.566945126392155,3.05166228619607,0.6,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Saturday,15,,,,7.167698198088604,3.1998867540269944,0.5071428571428571,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Wednesday,12,,,,6.472730179523467,3.480552851614424,0.4,Historical observation; current tests found no statistically significant timing effect.
+Posting day,Friday,15,,,,7.051237887567608,2.926696184559487,0.3,Historical observation; current tests found no statistically significant timing effect.

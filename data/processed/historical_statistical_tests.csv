@@ -1,0 +1,5 @@
+comparison,test,group_count,statistic,p_value,statistically_significant
+content_type,Kruskal-Wallis,2,15.621914191419137,7.735292014127157e-05,True
+video_length_group,Kruskal-Wallis,3,15.644369636963688,0.000400745170187206,True
+posting_hour,Kruskal-Wallis,22,23.290057720057803,0.32871023015983575,False
+posting_day,Kruskal-Wallis,7,3.161231276973865,0.7883555785078601,False

@@ -10,11 +10,28 @@ def load_data():
 
 
 def calculate_virality_score(posts):
+    posts = posts.copy()
+    reach = posts["views"].replace(0, pd.NA)
+    shares = posts.get("shares", pd.Series(0, index=posts.index)).fillna(0)
+    saves = posts.get("saves", pd.Series(0, index=posts.index)).fillna(0)
+    comments = posts["comments_count"].fillna(0)
+    likes = posts["likes"].fillna(0)
 
-    posts["virality_score"] = (
-        posts["engagement_rate"]
-        * posts["views"].rank(pct=True)
-    )
+    has_share_save_data = shares.gt(0).any() or saves.gt(0).any()
+    if has_share_save_data:
+        posts["virality_score"] = (
+            (0.40 * shares + 0.30 * saves + 0.20 * comments + 0.10 * likes)
+            / reach
+            * 100
+        ).fillna(0)
+        posts["virality_score_type"] = "Weighted engagement score"
+    else:
+        # Public YouTube exports do not expose shares, saves, or retention.
+        posts["virality_score"] = (
+            posts["engagement_rate"].fillna(0)
+            * posts["views"].rank(pct=True)
+        )
+        posts["virality_score_type"] = "YouTube engagement-reach proxy"
 
     return posts
 

@@ -8,7 +8,7 @@ limitations explicit.
 
 ## Evidence Base
 
-The current dataset contains 107 YouTube videos and 8,841 processed comments.
+The current dataset contains 100 Psych2Go videos and 9,335 processed comments.
 The analysis uses current cumulative views, likes, and comments, plus derived
 engagement and virality-proxy metrics. Comments are linked to videos through
 `post_id`.

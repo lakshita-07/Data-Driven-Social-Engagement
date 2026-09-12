@@ -1,284 +1,193 @@
-from googleapiclient.discovery import build
-from dotenv import load_dotenv
-from datetime import datetime, timezone
-from src.database.connection import get_connection
+"""Collect public video metadata from a YouTube channel."""
+
+from __future__ import annotations
+
+import argparse
 import os
+from pathlib import Path
+from typing import Any
 
-load_dotenv()
+import pandas as pd
+from dotenv import load_dotenv
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
-API_KEY = os.getenv("YOUTUBE_API_KEY")
 
-SEARCH_QUERIES = [
-   "student college struggles",
-    "student procrastination productivity",
-    "career job anxiety",
-    "relationship social life struggles",
-    "money financial struggles",
-    "burnout academic pressure"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+RAW_COLUMNS = [
+    "video_id",
+    "channel_id",
+    "channel_title",
+    "title",
+    "description",
+    "published_at",
+    "duration_iso",
+    "duration_sec",
+    "views",
+    "likes",
+    "comments_count",
+    "tags",
+    "category_id",
+    "thumbnail_url",
+    "source_type",
 ]
 
-MAX_RESULTS_PER_QUERY = 10
 
-
-def get_youtube_service():
-    youtube = build(
-        "youtube",
-        "v3",
-        developerKey=API_KEY
-    )
-
-    return youtube
-
-
-def search_videos(youtube, query):
-    request = youtube.search().list(
-        part="id",
-        q=query,
-        type="video",
-        maxResults=MAX_RESULTS_PER_QUERY
-    )
-
-    response = request.execute()
-
-    video_ids = []
-
-    for item in response["items"]:
-        video_ids.append(item["id"]["videoId"])
-
-    return video_ids
-
-
-def get_video_details(youtube, video_ids):
-    all_videos = []
-
-    start = 0
-
-    while start < len(video_ids):
-        batch = video_ids[start:start + 50]
-
-        video_ids_string = ",".join(batch)
-
-        request = youtube.videos().list(
-            part="snippet,contentDetails,statistics",
-            id=video_ids_string
-        )
-
-        response = request.execute()
-
-        for video in response["items"]:
-            all_videos.append(video)
-
-        start = start + 50
-
-    return all_videos
-
-def duration_to_seconds(duration):
-    duration = duration.replace("PT", "")
-
-    hours = 0
-    minutes = 0
+def duration_to_seconds(duration: str | None) -> int | None:
+    """Convert a YouTube ISO 8601 duration to seconds."""
+    if not duration or not duration.startswith("PT"):
+        return None
     seconds = 0
-
-    if "H" in duration:
-        parts = duration.split("H")
-        hours = int(parts[0])
-        duration = parts[1]
-
-    if "M" in duration:
-        parts = duration.split("M")
-        minutes = int(parts[0])
-        duration = parts[1]
-
-    if "S" in duration:
-        parts = duration.split("S")
-        seconds = int(parts[0])
-
-    return (hours * 3600) + (minutes * 60) + seconds
+    number = ""
+    for character in duration[2:]:
+        if character.isdigit():
+            number += character
+        elif character in "HMS" and number:
+            seconds += int(number) * {"H": 3600, "M": 60, "S": 1}[character]
+            number = ""
+    return seconds
 
 
-def convert_datetime(date_string):
-    date_time = datetime.fromisoformat(
-        date_string.replace("Z", "+00:00")
-    )
-
-    date_time = date_time.astimezone(timezone.utc)
-
-    return date_time.replace(tzinfo=None)
+def get_youtube_service(api_key: str | None = None):
+    load_dotenv()
+    key = api_key or os.getenv("YOUTUBE_API_KEY")
+    if not key:
+        raise RuntimeError("YOUTUBE_API_KEY is required for public YouTube collection")
+    return build("youtube", "v3", developerKey=key)
 
 
-def get_content_type(duration_seconds):
-    if duration_seconds <= 60:
-        return "Short"
-
-    return "Long-form"
-
-
-def save_video_to_database(video):
-    connection = get_connection()
-    cursor = connection.cursor()
-
-    video_id = video["id"]
-    snippet = video["snippet"]
-    content_details = video["contentDetails"]
-    statistics = video["statistics"]
-
-    title = snippet.get("title")
-    description = snippet.get("description")
-    channel_id = snippet.get("channelId")
-    published_at = snippet.get("publishedAt")
-
-    duration = content_details.get("duration")
-
-    views = statistics.get("viewCount")
-    likes = statistics.get("likeCount")
-    comments = statistics.get("commentCount")
-
-    if views is not None:
-        views = int(views)
-
-    if likes is not None:
-        likes = int(likes)
-
-    if comments is not None:
-        comments = int(comments)
-
-    duration_seconds = duration_to_seconds(duration)
-
-    content_type = get_content_type(duration_seconds)
-
-    posting_datetime = convert_datetime(published_at)
-
-    hashtags = ""
-
-    if "tags" in snippet:
-        hashtags = ", ".join(snippet["tags"])
-
-    query = """
-    INSERT INTO posts (
-        post_id,
-        platform,
-        account_id,
-        content_type,
-        caption,
-        hashtags,
-        posting_datetime,
-        duration_seconds,
-        views,
-        likes,
-        comments_count,
-        shares,
-        saves,
-        retention_rate
-    )
-    VALUES (
-        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-    )
-    ON DUPLICATE KEY UPDATE
-        account_id = VALUES(account_id),
-        content_type = VALUES(content_type),
-        caption = VALUES(caption),
-        hashtags = VALUES(hashtags),
-        posting_datetime = VALUES(posting_datetime),
-        duration_seconds = VALUES(duration_seconds),
-        views = VALUES(views),
-        likes = VALUES(likes),
-        comments_count = VALUES(comments_count)
-    """
-
-    values = (
-        video_id,
-        "YouTube",
-        channel_id,
-        content_type,
-        title + "\n\n" + description,
-        hashtags,
-        posting_datetime,
-        duration_seconds,
-        views,
-        likes,
-        comments,
-        None,
-        None,
-        None
-    )
-
-    cursor.execute(query, values)
-
-    connection.commit()
-
-    cursor.close()
-    connection.close()
+def _api_error(error: Exception) -> str:
+    if isinstance(error, HttpError):
+        return f"YouTube API error ({error.resp.status}): {error}"
+    return str(error)
 
 
-def update_existing_content_types():
-    connection = get_connection()
-    cursor = connection.cursor()
+def resolve_channel(youtube, channel_handle: str | None, channel_id: str | None) -> dict[str, Any]:
+    """Resolve a handle first, with an explicit channel ID as fallback."""
+    if channel_handle:
+        try:
+            response = youtube.channels().list(
+                part="snippet,contentDetails", forHandle=channel_handle.lstrip("@")
+            ).execute()
+            if response.get("items"):
+                return response["items"][0]
+            print(f"No channel found for handle {channel_handle}; trying channel ID.")
+        except Exception as error:
+            print(f"Handle lookup failed for {channel_handle}: {_api_error(error)}")
 
-    query = """
-    UPDATE posts
-    SET content_type =
-        CASE
-            WHEN duration_seconds <= 60 THEN 'Short'
-            ELSE 'Long-form'
-        END
-    WHERE platform = 'YouTube'
-    """
+    if channel_id:
+        response = youtube.channels().list(
+            part="snippet,contentDetails", id=channel_id
+        ).execute()
+        if response.get("items"):
+            return response["items"][0]
 
-    cursor.execute(query)
-
-    connection.commit()
-
-    print("Existing YouTube records classified:", cursor.rowcount)
-
-    cursor.close()
-    connection.close()
+    raise RuntimeError("Could not resolve a YouTube channel from the handle or channel ID")
 
 
-def main():
-    print("Starting YouTube data collection...")
-    print()
+def _video_row(video: dict[str, Any]) -> dict[str, Any]:
+    snippet = video.get("snippet", {})
+    details = video.get("contentDetails", {})
+    statistics = video.get("statistics", {})
+    duration_iso = details.get("duration")
 
-    update_existing_content_types()
+    def count(name: str):
+        value = statistics.get(name)
+        return int(value) if value is not None else None
 
-    print()
+    return {
+        "video_id": video.get("id"),
+        "channel_id": snippet.get("channelId"),
+        "channel_title": snippet.get("channelTitle"),
+        "title": snippet.get("title"),
+        "description": snippet.get("description"),
+        "published_at": snippet.get("publishedAt"),
+        "duration_iso": duration_iso,
+        "duration_sec": duration_to_seconds(duration_iso),
+        "views": count("viewCount"),
+        "likes": count("likeCount"),
+        "comments_count": count("commentCount"),
+        "tags": ", ".join(snippet.get("tags", [])),
+        "category_id": snippet.get("categoryId"),
+        "thumbnail_url": snippet.get("thumbnails", {}).get("high", {}).get("url"),
+        "source_type": "public_youtube_api",
+    }
 
-    youtube = get_youtube_service()
 
-    all_video_ids = []
+def save_rows(rows: list[dict[str, Any]], output: Path) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(rows, columns=RAW_COLUMNS).to_csv(output, index=False)
 
-    for query in SEARCH_QUERIES:
-        print("Searching:", query)
 
-        video_ids = search_videos(youtube, query)
+def collect_videos(
+    channel_handle: str | None = None,
+    channel_id: str | None = None,
+    max_videos: int = 100,
+    output: str | Path | None = None,
+    youtube=None,
+) -> Path:
+    load_dotenv()
+    channel_handle = channel_handle or os.getenv("YOUTUBE_CHANNEL_HANDLE")
+    channel_id = channel_id or os.getenv("YOUTUBE_CHANNEL_ID")
+    max_videos = max(0, max_videos)
+    output_path = Path(output) if output else PROJECT_ROOT / "data/raw/youtube_videos_raw.csv"
+    if not output_path.is_absolute():
+        output_path = PROJECT_ROOT / output_path
+    rows: list[dict[str, Any]] = []
+    save_rows(rows, output_path)
 
-        for video_id in video_ids:
-            if video_id not in all_video_ids:
-                all_video_ids.append(video_id)
-
-    print()
-    print("Unique videos found:", len(all_video_ids))
-    print()
-
-    videos = get_video_details(youtube, all_video_ids)
-
-    print("Saving videos to MySQL...")
-    print()
-
-    saved_count = 0
-
-    for video in videos:
-        save_video_to_database(video)
-
-        print(
-            "Saved:",
-            video["snippet"]["title"]
+    try:
+        youtube = youtube or get_youtube_service()
+        channel = resolve_channel(youtube, channel_handle, channel_id)
+        uploads_id = channel["contentDetails"]["relatedPlaylists"]["uploads"]
+        request = youtube.playlistItems().list(
+            part="contentDetails", playlistId=uploads_id, maxResults=min(max_videos, 50)
         )
+        video_ids: list[str] = []
+        while request and len(video_ids) < max_videos:
+            response = request.execute()
+            video_ids.extend(
+                item["contentDetails"]["videoId"]
+                for item in response.get("items", [])
+                if item.get("contentDetails", {}).get("videoId")
+            )
+            next_page = response.get("nextPageToken")
+            request = (
+                youtube.playlistItems().list(
+                    part="contentDetails",
+                    playlistId=uploads_id,
+                    maxResults=min(max_videos - len(video_ids), 50),
+                    pageToken=next_page,
+                )
+                if next_page and len(video_ids) < max_videos
+                else None
+            )
 
-        saved_count = saved_count + 1
+        for start in range(0, min(len(video_ids), max_videos), 50):
+            response = youtube.videos().list(
+                part="snippet,contentDetails,statistics",
+                id=",".join(video_ids[start:start + 50]),
+            ).execute()
+            rows.extend(_video_row(video) for video in response.get("items", []))
+            save_rows(rows, output_path)
+            print(f"Videos collected: {len(rows)}")
+    except Exception as error:
+        print(f"Video collection stopped: {_api_error(error)}")
+    finally:
+        save_rows(rows, output_path)
 
-    print()
-    print("Collection completed.")
-    print("Videos processed:", saved_count)
+    print(f"Video collection completed with {len(rows)} videos: {output_path}")
+    return output_path
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--channel_handle", default=None)
+    parser.add_argument("--channel_id", default=None)
+    parser.add_argument("--max_videos", type=int, default=100)
+    parser.add_argument("--output", default=None)
+    args = parser.parse_args()
+    collect_videos(**vars(args))
 
 
 if __name__ == "__main__":

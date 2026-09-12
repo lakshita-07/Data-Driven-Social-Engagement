@@ -10,6 +10,7 @@ def load_posts():
 
 
 def calculate_features(posts):
+    posts = posts.copy()
 
     posts["like_rate"] = 0.0
     posts["comment_rate"] = 0.0
@@ -53,6 +54,16 @@ def calculate_features(posts):
     posts["posting_day"] = posts[
         "posting_datetime"
     ].dt.day_name()
+    posts["is_weekend"] = posts["posting_datetime"].dt.dayofweek >= 5
+    posts["caption_length"] = posts["caption"].fillna("").astype(str).str.len()
+    posts["hashtag_count"] = posts["hashtags"].fillna("").astype(str).apply(
+        lambda value: sum(token.startswith("#") for token in value.split())
+    )
+    posts["video_length_group"] = pd.cut(
+        posts["duration_seconds"],
+        bins=[-float("inf"), 30, 60, float("inf")],
+        labels=["Short (0-30 sec)", "Medium (31-60 sec)", "Long (60+ sec)"],
+    ).astype(str)
 
     return posts
 

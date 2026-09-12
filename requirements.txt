@@ -3,6 +3,7 @@ numpy
 matplotlib
 seaborn
 scikit-learn
+scipy
 
 selenium
 beautifulsoup4
@@ -19,4 +20,5 @@ streamlit
 
 googlecolab
 python-dotenv
+google-api-python-client
 openpyxl

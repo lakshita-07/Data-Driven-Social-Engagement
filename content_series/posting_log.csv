@@ -1,0 +1,9 @@
+series_post_id,script_file,topic,format,hook_type,planned_duration_seconds,planned_time,actual_time,post_id,views,likes,comments,shares,saves,retention_rate,followers_gained,notes
+S01,01_exam_pressure.md,Academic Pressure,Short,First-person question,35,2026-09-14 19:00,,,,,,,,,
+S02,02_procrastination.md,Procrastination and Productivity,Short,Pattern interrupt,35,2026-09-16 19:00,,,,,,,,,
+S03,03_work_anxiety.md,Career and Job Anxiety,Short,Confession,40,2026-09-18 19:00,,,,,,,,,
+S04,04_money_stress.md,Money and Financial Struggles,Short,Contrarian statement,35,2026-09-20 19:00,,,,,,,,,
+S05,05_relationship_boundaries.md,Relationships and Social Life,Short,Relatable scenario,40,2026-09-22 19:00,,,,,,,,,
+S06,06_burnout.md,Burnout and Mental Pressure,Short,Recognition hook,40,2026-09-24 19:00,,,,,,,,,
+S07,07_social_anxiety.md,Relationships and Social Life,Short,First-person question,35,2026-09-26 19:00,,,,,,,,,
+S08,08_recovery.md,Burnout and Mental Pressure,Short,Hopeful reframe,40,2026-09-28 19:00,,,,,,,,,

@@ -1,6 +1,29 @@
-.venv/
-__pycache__/
-*.pyc
+# Environment files and secrets
 .env
+.env.*
+!.env.example
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# OS files
 .DS_Store
-data/raw/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Database and temporary files
+*.db
+*.sqlite
+*.log
+
+# Raw data stays local; keep its README and directory marker tracked
+data/raw/*
+!data/raw/README.md
+!data/raw/.gitkeep

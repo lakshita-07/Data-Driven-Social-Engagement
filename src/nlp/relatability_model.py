@@ -53,7 +53,9 @@ def train_and_evaluate(
         raise ValueError(f"Unsupported labels: {sorted(invalid_labels)}")
 
     comments = pd.read_csv(comments_path, usecols=["comment_id", "cleaned_text"])
-    data = labels.merge(comments, on="comment_id", how="inner", validate="one_to_one")
+    data = labels[["comment_id", "label"]].merge(
+        comments, on="comment_id", how="inner", validate="one_to_one"
+    )
     data = data.dropna(subset=["cleaned_text"])
     if data["label"].nunique() < 2:
         raise ValueError("Manual labels must contain both Relatable and Neutral classes")
